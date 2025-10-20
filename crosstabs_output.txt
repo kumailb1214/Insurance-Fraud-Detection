@@ -1,0 +1,236 @@
+
+--- Month ---
+ FraudFound_P     0    1
+Month                  
+Apr           1200   80
+Aug           1043   84
+Dec           1223   62
+Feb           1184   82
+Jan           1324   87
+Jul           1197   60
+Jun           1241   80
+Mar           1258  102
+May           1273   94
+Nov           1155   46
+Oct           1235   70
+Sep           1164   76
+
+--- DayOfWeek ---
+ FraudFound_P     0    1
+DayOfWeek              
+Friday        2291  154
+Monday        2456  160
+Saturday      1850  132
+Sunday        1623  122
+Thursday      2053  120
+Tuesday       2180  120
+Wednesday     2044  115
+
+--- Make ---
+ FraudFound_P     0    1
+Make                   
+Accura         413   59
+BMW             14    1
+Chevrolet     1587   94
+Dodge          107    2
+Ferrari          2    0
+Ford           417   33
+Honda         2622  179
+Jaguar           6    0
+Lexus            1    0
+Mazda         2231  123
+Mecedes          3    1
+Mercury         77    6
+Nisson          29    1
+Pontiac       3624  213
+Porche           5    0
+Saab            97   11
+Saturn          52    6
+Toyota        2935  186
+VW             275    8
+
+--- AccidentArea ---
+ FraudFound_P      0    1
+AccidentArea            
+Rural          1465  133
+Urban         13032  790
+
+--- DayOfWeekClaimed ---
+ FraudFound_P         0    1
+DayOfWeekClaimed           
+0                    1    0
+Friday            2333  164
+Monday            3541  216
+Saturday           117   10
+Sunday              49    3
+Thursday          2516  144
+Tuesday           3177  198
+Wednesday         2763  188
+
+--- MonthClaimed ---
+ FraudFound_P     0    1
+MonthClaimed           
+0                1    0
+Apr           1189   82
+Aug           1034   92
+Dec           1097   49
+Feb           1209   78
+Jan           1354   92
+Jul           1169   56
+Jun           1215   78
+Mar           1251   97
+May           1309  102
+Nov           1239   46
+Oct           1266   73
+Sep           1164   78
+
+--- Sex ---
+ FraudFound_P      0    1
+Sex                     
+Female         2315  105
+Male          12182  818
+
+--- MaritalStatus ---
+ FraudFound_P      0    1
+MaritalStatus           
+Divorced         73    3
+Married        9986  639
+Single         4406  278
+Widow            32    3
+
+--- Fault ---
+ FraudFound_P       0    1
+Fault                    
+Policy Holder  10344  886
+Third Party     4153   37
+
+--- PolicyType ---
+ FraudFound_P             0    1
+PolicyType                     
+Sedan - All Perils    3676  411
+Sedan - Collision     5200  384
+Sedan - Liability     4951   36
+Sport - All Perils      22    0
+Sport - Collision      300   48
+Sport - Liability        1    0
+Utility - All Perils   299   41
+Utility - Collision     27    3
+Utility - Liability     21    0
+
+--- VehicleCategory ---
+ FraudFound_P        0    1
+VehicleCategory           
+Sedan            8876  795
+Sport            5274   84
+Utility           347   44
+
+--- VehiclePrice ---
+ FraudFound_P        0    1
+VehiclePrice              
+20000 to 29000   7658  421
+30000 to 39000   3358  175
+40000 to 59000    430   31
+60000 to 69000     83    4
+less than 20000   993  103
+more than 69000  1975  189
+
+--- Days_Policy_Accident ---
+ FraudFound_P              0    1
+Days_Policy_Accident            
+1 to 7                   13    1
+15 to 30                 46    3
+8 to 15                  50    5
+more than 30          14342  905
+none                     46    9
+
+--- Days_Policy_Claim ---
+ FraudFound_P           0    1
+Days_Policy_Claim            
+15 to 30              50    6
+8 to 15               18    3
+more than 30       14428  914
+none                   1    0
+
+--- PastNumberOfClaims ---
+ FraudFound_P           0    1
+PastNumberOfClaims           
+1                   3351  222
+2 to 4              5191  294
+more than 4         1942   68
+none                4013  339
+
+--- AgeOfVehicle ---
+ FraudFound_P     0    1
+AgeOfVehicle           
+2 years         70    3
+3 years        139   13
+4 years        208   21
+5 years       1262   95
+6 years       3220  228
+7 years       5482  325
+more than 7   3775  206
+new            341   32
+
+--- AgeOfPolicyHolder ---
+ FraudFound_P          0    1
+AgeOfPolicyHolder           
+16 to 17            289   31
+18 to 20             13    2
+21 to 25             92   16
+26 to 30            580   33
+31 to 35           5233  360
+36 to 40           3806  237
+41 to 50           2684  144
+51 to 65           1322   70
+over 65             478   30
+
+--- PoliceReportFiled ---
+ FraudFound_P           0    1
+PoliceReportFiled            
+No                 14085  907
+Yes                  412   16
+
+--- WitnessPresent ---
+ FraudFound_P        0    1
+WitnessPresent            
+No              14413  920
+Yes                84    3
+
+--- AgentType ---
+ FraudFound_P      0    1
+AgentType               
+External      14260  919
+Internal        237    4
+
+--- NumberOfSuppliments ---
+ FraudFound_P            0    1
+NumberOfSuppliments           
+1 to 2               2330  159
+3 to 5               1920   97
+more than 5          3672  195
+none                 6575  472
+
+--- AddressChange_Claim ---
+ FraudFound_P             0    1
+AddressChange_Claim            
+1 year                 159   11
+2 to 3 years           240   51
+4 to 8 years           598   33
+no change            13499  825
+under 6 months           1    3
+
+--- NumberOfCars ---
+ FraudFound_P      0    1
+NumberOfCars            
+1 vehicle     13466  850
+2 vehicles      666   43
+3 to 4          343   29
+5 to 8           20    1
+more than 8       2    0
+
+--- BasePolicy ---
+ FraudFound_P     0    1
+BasePolicy             
+All Perils    3997  452
+Collision     5527  435
+Liability     4973   36

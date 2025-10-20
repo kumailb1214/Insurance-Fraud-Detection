@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -18,18 +19,14 @@ def load_artifacts():
         price_mapping = joblib.load('price_mapping.joblib')
         days_mapping = joblib.load('days_mapping.joblib')
         days_claim_mapping = joblib.load('days_claim_mapping.joblib')
-        return model, scaler, model_columns, target_encoding_maps, price_mapping, days_mapping, days_claim_mapping
+        numerical_features = joblib.load('numerical_features.joblib') # <-- LOAD THE MISSING ARTIFACT
+        return model, scaler, model_columns, target_encoding_maps, price_mapping, days_mapping, days_claim_mapping, numerical_features
     except FileNotFoundError as e:
         st.error(f"Error loading model artifacts: {e}. Please ensure all .joblib files are in the same directory as the app.")
-        return None, None, None, None, None, None, None
+        return None, None, None, None, None, None, None, None
 
-model, scaler, model_columns, target_encoding_maps, price_mapping, days_mapping, days_claim_mapping = load_artifacts()
+model, scaler, model_columns, target_encoding_maps, price_mapping, days_mapping, days_claim_mapping, numerical_features = load_artifacts()
 
-# --- Debugging: Print types of loaded objects ---
-st.write(f"Type of model: {type(model)}")
-st.write(f"Type of scaler: {type(scaler)}")
-
-# --- Defensive Check for Loaded Artifacts ---
 if scaler is not None and not callable(getattr(scaler, 'transform', None)):
     st.error("The 'transform' attribute of the loaded scaler object is not callable. The 'scaler.joblib' file might be corrupt or incorrect.")
     st.stop()
@@ -47,36 +44,18 @@ def process_data(df):
 
     for col, mapping in target_encoding_maps.items():
         X[col + '_encoded'] = X[col].map(mapping)
-        # mapping may be a dict (where mapping.values() is callable)
-        # or a pandas Series (where mapping.values is a numpy.ndarray and not callable).
-        try:
-            vals = list(mapping.values())
-        except TypeError:
-            # mapping.values is likely an ndarray (not callable) or similar
-            vals = list(mapping.values)
-        mean_value = np.mean(vals)
-        # Use .loc for safer assignment
+        mean_value = np.mean(list(mapping.values))
         X.loc[:, col + '_encoded'] = X[col + '_encoded'].fillna(mean_value)
 
     X = X.drop(list(target_encoding_maps.keys()), axis=1)
 
     categorical_features = X.select_dtypes(include=['object']).columns
-    numerical_features = X.select_dtypes(include=np.number).columns
-
+    
     X_cat = pd.get_dummies(X[categorical_features], drop_first=True)
-
-    # Limit numerical features to those the scaler was fitted on (if available)
-    try:
-        scaler_features = list(getattr(scaler, 'feature_names_in_', []))
-    except Exception:
-        scaler_features = []
-
-    if scaler_features:
-        num_feats_to_use = [f for f in numerical_features if f in scaler_features]
-    else:
-        num_feats_to_use = list(numerical_features)
-
-    X_num = pd.DataFrame(scaler.transform(X[num_feats_to_use]), columns=num_feats_to_use, index=X.index)
+    
+    # Use the loaded numerical_features list to ensure correct order before scaling
+    data_to_scale = X[numerical_features]
+    X_num = pd.DataFrame(scaler.transform(data_to_scale), columns=numerical_features, index=X.index)
     
     X_processed = pd.concat([X_num, X_cat], axis=1)
     
@@ -86,34 +65,6 @@ def process_data(df):
     X_processed = X_processed[model_columns]
     
     return X_processed
-
-
-def get_required_columns():
-    """Return the list of columns required by the processing pipeline before one-hot encoding.
-    This is used to validate uploaded CSVs and provide helpful errors in the UI.
-    """
-    # Required raw columns used by process_data
-    base_required = [
-        'DayOfWeek', 'VehiclePrice', 'Days_Policy_Accident', 'Days_Policy_Claim',
-        'Deductible'
-    ]
-    # Also required columns referenced in target_encoding_maps
-    try:
-        te_cols = list(target_encoding_maps.keys()) if target_encoding_maps else []
-    except Exception:
-        te_cols = []
-
-    return list(set(base_required + te_cols))
-
-
-def validate_input_df(df):
-    """Check that uploaded DataFrame contains required columns. Return (ok, missing_columns).
-    """
-    if df is None:
-        return False, ['No data provided']
-    required = get_required_columns()
-    missing = [c for c in required if c not in df.columns]
-    return (len(missing) == 0), missing
 
 # --- Tiering Function ---
 def assign_tier(probability):
@@ -136,7 +87,7 @@ Upload a CSV file containing insurance claims. The system will predict the proba
 
 uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
-if uploaded_file is not None and all([model, scaler, model_columns, target_encoding_maps]):
+if uploaded_file is not None and all([model, scaler, model_columns, target_encoding_maps, numerical_features]):
     try:
         input_df = pd.read_csv(uploaded_file)
         st.write("Uploaded Data Preview:")

@@ -1,8 +1,17 @@
-pandas
-scikit-learn
-lightgbm
-xgboost
-seaborn
-imblearn
-streamlit
-joblib
+ app
+ ast
+ catboost
+ imblearn
+ joblib
+ lightgbm
+ numpy
+ os
+ pandas
+ pathlib
+ pytest
+ scipy
+ sklearn
+ skopt
+ streamlit
+ warnings
+ xgboost
